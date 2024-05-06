@@ -3,7 +3,28 @@
 {% block body %}
 <div class="mid-container">
     <div class="suggestion">
-
+        <h2 align="center">Suggestions</h2>
+        <br>
+        
+        {% for user in users %}
+        <div class="user-section">
+            <div class="profile-sec">
+                <!-- <img class="profile-sec-pic" src="{{user.profile.profile_picture.url}}" alt=""> -->
+                {% if user.profile.profile_picture %}
+                <img class="profile-sec-pic" src="{{user.profile.profile_picture.url}}" alt="">
+                {% else %}
+                <img class="profile-sec-pic" src="/static/profile_pics/user_icon.jpg" alt="">
+                {% endif %}
+            </div>
+            <div class="username-section">
+                <a href="/userprofile/{{user.username}}/"><h3>{{user.username}}</h3></a>
+                <p>{{user.bio}}</p>
+                <a href="/addfriend/{{user.id}}">follow</a>
+            </div>
+        </div>
+            
+        {% endfor %}
+    
     </div>
     <div class="feed">
         

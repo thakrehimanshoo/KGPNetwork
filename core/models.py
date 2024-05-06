@@ -5,7 +5,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     
     bio = models.TextField(blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True)
+    profile_picture = models.ImageField(upload_to='static/profile_pics/', default='static/profile_pics/user_icon.jpg', blank=True)
 
     def __str__(self):
         return self.user.username

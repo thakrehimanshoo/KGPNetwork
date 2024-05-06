@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock title %}
+{% block body %}
+
+
+<div class="container-userprofile">
+   
+    <div class="userprofile-content">
+        <div class="userprofile-pic">
+            <img src="{{user.profile.profile_picture.url}}" alt="" class="profile-pic">
+        </div>
+        <div class="userprofile-info">
+            <h2>{{user.username}}</h2>
+            <h1>{{user.bio}}</h1>
+        
+    </div>
+
+
+</div>
+
+    <script>
+        document.getElementById("logo").innerHTML = "{{user.username}}";
+
+    </script>
+{% endblock body %}

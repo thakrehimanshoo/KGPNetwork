@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
 }
 body{
     background-color: #948979;
@@ -48,9 +49,16 @@ a:hover {
 .suggestion{
     padding: 20px;
     width: 30%;
-     
-    background-color: #000000;
-    height: 100vh;
+     border-right: #153448   2px solid;
+     display: flex;
+    flex-direction: column;
+   
+    height: 90vh;
+   
+    overflow: scroll;
+    scroll-behavior: smooth;
+    
+    
 }
 .login-container
 {
@@ -89,5 +97,56 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
+}
+.profile-pic{
+    
+    width: 100px; 
+    height: 100px; 
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 20px;
+   
+}
+.profile-sec-pic{
+    width: 50px; 
+    height: 50px; 
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
+.user-section{
+    display: flex;
+    flex-direction: row;
+   
+
+   margin: 10px 30px 10px 30px;
+    border-radius: 10px;
+    
+    
+
+}
+.userprofile-info p {
+    color: #000000 !important; 
+    margin: 10px;
+}
+.container-userprofile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    
+}
+.userprofile-content{
+
+
+   
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    height: 50%;
+    justify-content: center;
+    align-items: center;
+    margin: 30px;
 }

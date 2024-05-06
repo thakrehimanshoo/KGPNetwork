@@ -37,9 +37,17 @@
     }
 </style>
 <div class="container">
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST"  enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% if profile_pic %} <img class="profile-pic" src="{{profile_pic}}" alt=""> 
+        {% else %} <img  class="profile-pic" src="/static/profile_pics/user_icon.png" alt=""> {% endif %}
+   
+        {{form.bio.label_tag}}
+        {{form.bio}}
+     
+        <label for="id_profile_picture">Profile Picture:</label>
+        <input type="file" name="profile_picture" id="id_profile_picture">
+        
         <button type="submit">Save</button>
     </form>
 </div>
