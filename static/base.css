@@ -73,3 +73,21 @@ a:hover {
     justify-content: center;
     align-items: center;
 }
+.form-button {
+	padding: 15px ;
+	border-radius: 10px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border: none;
+	color: white;
+	cursor: pointer;
+	background-color: #153448;
+	width: 100%;
+	font-size: 16px;
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
