@@ -1,4 +1,7 @@
-if [[ $CREATE_SUPERUSER ]];
-then
-  python world_champ_2022/manage.py createsuperuser --no-input
+
+pip install -r requirements.txt
+
+
+if [[ $CREATE_SUPERUSER ]]; then
+    python KGPNetwork/manage.py createsuperuser --no-input
 fi
