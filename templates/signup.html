@@ -11,7 +11,7 @@
         <h1>KGPNetwork</h1>
         <h3>SignUp</h3>
         <!-- Display error message if needed -->
-        <div id="error-message" style="display: none;">Incorrect username or password.</div>
+        <div id="error-message" style="display: none;">Password should be >8 char or username already exist</div>
         <form method="POST">
             {% csrf_token %}
             <!-- Apply custom CSS classes to form fields -->
