@@ -1,8 +1,51 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from .forms import SignupForm
 from .forms import ProfileForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from .models import Follow
+from .models import Post
+from .forms import PostForm
+
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('home')  # Redirect to home or wherever you want after posting
+    else:
+        form = PostForm()
+    return render(request, 'home.html', {'postform': form})
+
+@login_required
+def follow_user(request, username):
+    user_to_follow = get_object_or_404(User, username=username)
+    # Check if the user is not already followed
+    if not request.user.following.filter(following=user_to_follow).exists():
+        # Create a new Follow object to represent the follow relationship
+        follow_object = Follow(follower=request.user, following=user_to_follow)
+        follow_object.save()
+    return redirect('home')
+
+
+@login_required
+def unfollow_user(request, username):
+    followed_user = User.objects.get(username=username)
+    follow_instance = Follow.objects.filter(follower=request.user, following=followed_user).first()
+    if follow_instance:
+        follow_instance.delete()
+        # Unfollow relationship deleted successfully
+        # You can add a success message here if needed
+    else:
+        # Follow relationship does not exist
+        # You can add a message indicating this if needed
+        pass
+    return redirect('following_list')
+
 
 
 @login_required
@@ -48,8 +91,16 @@ def login(request):
 def home(request):
     if request.user.is_anonymous:
         return redirect('/login/')
-    users = User.objects.all()
-    return render(request, 'home.html',{'users': users})
+    
+    following_ids = Follow.objects.filter(follower=request.user).values_list('following_id', flat=True)
+
+
+    users = User.objects.exclude(id__in=following_ids)
+    if users.count() == True:
+        emptyval = True
+    else:    
+        emptyval = False
+    return render(request, 'home.html',{'users': users, 'thisuser': request.user, 'emptyval': emptyval})
 def logout(request):
     auth_logout(request)
     return redirect('/login/')
@@ -73,3 +124,13 @@ def user_profile(request, userid):
     # return HttpResponse(f'User Profile of {username}')
     user = User.objects.get(username=userid)
     return render(request, 'user_profile.html', {'user': user})
+
+@login_required
+def following_list(request):
+    # Retrieve the logged-in user object
+    user = request.user
+    
+    # Query all Follow objects where the following field matches the logged-in user
+    followings = Follow.objects.filter(follower=user)
+    
+    return render(request, 'following.html', {'followings': followings})

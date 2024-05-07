@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Following{% endblock title %}
+{% block body %}
+<div class="suggestion-following">
+
+    
+    {% for following in followings %}
+
+    <div class="user-section">
+        <div class="profile-sec">
+            <!-- <img class="profile-sec-pic" src="{{user.profile.profile_picture.url}}" alt=""> -->
+            {% if following.following.profile.profile_picture %}
+            <img class="profile-sec-pic" src="{{following.following.profile.profile_picture.url}}" alt="">
+            {% else %}
+            <img class="profile-sec-pic" src="/static/profile_pics/user_icon.jpg" alt="">
+            {% endif %}
+        </div>
+        <div class="username-section">
+            <a href="/userprofile/{{following.following.username}}/">
+                <h3>{{following.following.username}}</h3>
+            </a>
+
+            {% comment %} {% if user.follower.filter(follower = request.user).exists() %}
+            followed
+            {% else %} {% endcomment %}
+            <a id="unfollowlink" href="/unfollow/{{following.following.username}}/">unfollow</a>
+            {% comment %} {% endif %} {% endcomment %}
+
+        </div>
+    </div>
+
+
+    {% endfor %}
+
+</div>
+<script>
+    document.getElementById("logo").innerHTML = "My Following";
+    
+</script>
+{% endblock body %}
