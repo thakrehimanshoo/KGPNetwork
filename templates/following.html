@@ -2,7 +2,9 @@
 {% block title %}Following{% endblock title %}
 {% block body %}
 <div class="suggestion-following">
+    <div id="empty-section">
 
+    </div>
     
     {% for following in followings %}
 
@@ -35,6 +37,10 @@
 </div>
 <script>
     document.getElementById("logo").innerHTML = "My Following";
-    
+    {% if emptyval %}
+    var emptyspan = document.createElement("span");
+    emptyspan.innerText = "You Don't Follow Anyone Yet!";
+    document.getElementById("empty-section").appendChild(emptyspan);
+    {% endif %}
 </script>
 {% endblock body %}

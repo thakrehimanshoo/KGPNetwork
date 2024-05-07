@@ -12,4 +12,7 @@ urlpatterns = [
     path('follow/<str:username>/', views.follow_user, name='follow_user'),
     path('unfollow/<str:username>/', views.unfollow_user, name='unfollow_user'),
     path('following/', views.following_list, name='following_list'),
+    path('createpost/', views.create_post, name='create_post'),
+    path('posts/', views.posts, name='posts'),
+    path('post/<int:post_id>/delete/', views.delete_post, name='delete_post'),
 ]

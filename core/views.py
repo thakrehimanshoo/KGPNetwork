@@ -19,7 +19,7 @@ def create_post(request):
             return redirect('home')  # Redirect to home or wherever you want after posting
     else:
         form = PostForm()
-    return render(request, 'home.html', {'postform': form})
+    return redirect('home')
 
 @login_required
 def follow_user(request, username):
@@ -100,7 +100,24 @@ def home(request):
         emptyval = True
     else:    
         emptyval = False
-    return render(request, 'home.html',{'users': users, 'thisuser': request.user, 'emptyval': emptyval})
+
+    # following_id = request.user.following.values_list('id', flat=True)
+    posts = Post.objects.filter(author_id__in=following_ids).order_by('-created_at')
+    if posts.count() == 0:
+        postval = True 
+    else:
+        postval = False
+    
+    return render(request, 'home.html',{'users': users, 'thisuser': request.user, 'emptyval': emptyval, 'posts': posts, 'postval': postval})
+
+def posts(request):
+    posts = Post.objects.filter(author_id=request.user.id).order_by('-created_at')
+    if posts.count() == 0:
+        postval = True
+    else:
+        postval = False
+    return render(request, 'posts.html', {'posts': posts, 'postval': postval})
+
 def logout(request):
     auth_logout(request)
     return redirect('/login/')
@@ -132,5 +149,21 @@ def following_list(request):
     
     # Query all Follow objects where the following field matches the logged-in user
     followings = Follow.objects.filter(follower=user)
+    if followings.count() == 0:
+        emptyval = True
+    else:  
+        emptyval = False
+    return render(request, 'following.html', {'followings': followings, 'emptyval': emptyval})
+
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
     
-    return render(request, 'following.html', {'followings': followings})
+    # Check if the current user is the author of the post
+    if request.user == post.author:
+        post.delete()
+        # Optionally, redirect the user to a different page after deletion
+        return redirect('posts')
+    else:
+        # Handle unauthorized deletion (e.g., show an error message)
+        return redirect('posts')  # Redirect back to the home page
+

@@ -2,7 +2,7 @@
 {% block title %}Home{% endblock title %}
 {% block body %}
 <div class="mid-container">
-    
+    <img src="/static/create-post.png" onclick="createpost()" id="create-png" alt="">
     <div class="suggestion">
         <h2 align="center">Suggestions</h2>
         <br>
@@ -40,12 +40,38 @@
     
     </div>
     <div class="feed">
-        <div class="create-post">
-            <form method="POST">
-                {% csrf_token %}
-                {{form.content}}
+        <h2 align="center">Feed</h2>
+        <br>
+        <div id="feed-empty-section">
+
+        </div>
+        {% for post in posts %}
+        <div class="kgpnet-wrap">
+            <div class="kgpnet-header">
+              <img src="{{post.author.profile.profile_picture.url}}" alt="" class="avator">
+              <div class="kgpnet-header-info">
+                <div class="name-date"></div>
+                {{post.author.username}} <span>    {{ post.created_at|date:"d M Y H:i" }}
+
+          </span>
+                <p>{{post.content}}</p>
                 
-                <button type="submit">Post</button>
+              </div>
+              
+            </div>
+
+        </div>
+        {% endfor %}
+        {% comment %} <p>{{posts.count}}</p>
+        
+        <p>{{post.content}}</p>
+         {% endcomment %}
+
+        <div class="create-post" >
+            <form method="POST" action="/createpost/" onsubmit="return validateForm()" >
+                {% csrf_token %}
+                <textarea class="content" maxlength="240"  name="content" placeholder="Write your post here..."></textarea>
+            <button class="postbutton" onclick="hidecreatepost()" type="submit">Post</button>
             </form>
         </div>
     </div>
@@ -54,12 +80,32 @@
     document.getElementById("logo").innerHTML = "KGPNetwork";
     {% if emptyval %}
     var emptyspan = document.createElement("span");
-
-
-emptyspan.innerText = "No Suggestions";
-
-document.getElementById("empty-section").appendChild(emptyspan);
+    emptyspan.innerText = "No Suggestions";
+    document.getElementById("empty-section").appendChild(emptyspan);
     {% endif %}
+    {% if postval %}
+    var emptyspan = document.createElement("span");
+    emptyspan.innerText = "Feed Empty";
+    document.getElementById("feed-empty-section").appendChild(emptyspan);
+    {% endif %}
+
+    function createpost(){
+        document.querySelector(".create-post").style.display = "block";
+        document.getElementById("create-png").style.display = "none";
+    }
+    function hidecreatepost(){
+        document.querySelector(".create-post").style.display = "none";
+        document.getElementById("create-png").style.display = "block";
+    }
+    function validateForm() {
+            var content = document.getElementById("postContent").value.trim();
+            if (content == "") {
+                alert("Post content cannot be empty.");
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
+
 </script>
  
 
