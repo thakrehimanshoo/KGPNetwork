@@ -201,6 +201,12 @@ a:hover {
     
 
 }
+@media (max-width: 699px) {
+    
+    .userprofile-info {
+        align-items: center;
+    }
+}
 .container-userprofile {
     display: flex;
     flex-direction: row;
@@ -211,21 +217,43 @@ a:hover {
     background-color: white;
 
 }
-
 .userprofile-content{
 
 
    
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    margin: 30px;
-    width: 30%;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  margin: 30px;
+  width: 30%;
 }
+@media(max-width: 699px) {
+    .container-userprofile {
+      flex-direction: column;
+      margin: 10px;
+      margin-top: 50%;
+      justify-content: space-between;
+      padding: 20px;
+    }
+    .container-userprofile img{
+        width: 75px;
+        height: 75px;
+        
+    
+    }
+    .userprofile-content
+    {
+      padding: 10px;
+      padding-top: 0;
+      
+    }
+}
+
+
 #create-png{
     width: 50px; 
     height: 50px; 
