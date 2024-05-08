@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Suggestions{% endblock title %}
+{% block body %}
+<div class="suggestion-tab">
+    <h2 align="center">Suggestions</h2>
+    <br>
+    <div id="empty-section">
+
+    </div>
+
+    {% for user in users %}
+    {% if user.username != request.user.username %}
+
+    <div class="user-section">
+        <div class="profile-sec">
+            <!-- <img class="profile-sec-pic" src="{{user.profile.profile_picture.url}}" alt=""> -->
+            {% if user.profile.profile_picture %}
+            <img class="profile-sec-pic" src="{{user.profile.profile_picture.url}}" alt="">
+            {% else %}
+            <img class="profile-sec-pic" src="/static/profile_pics/user_icon.jpg" alt="">
+            {% endif %}
+        </div>
+        <div class="username-section">
+            <a href="/userprofile/{{user.username}}/">
+                <h3>{{user.username}}</h3>
+            </a>
+            <p>{{user.bio}}</p>
+            {% comment %} {% if user.follower.filter(follower = request.user).exists() %}
+            followed
+            {% else %} {% endcomment %}
+            <a id="followlink"  href="/follow/{{user.username}}/?source=suggestion">follow</a>
+            {% comment %} {% endif %} {% endcomment %}
+
+        </div>
+    </div>
+
+    {% endif %}
+    
+    {% endfor %}
+
+
+</div>
+<script>
+    document.getElementById("logo").innerHTML = "KGPNetwork";
+        {% if emptyval %}
+        var emptyspan = document.createElement("span");
+        emptyspan.innerText = "No Suggestions";
+        document.getElementById("empty-section").appendChild(emptyspan);
+        {% endif %}
+        </script>
+{% endblock body %}

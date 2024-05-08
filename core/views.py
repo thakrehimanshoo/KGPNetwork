@@ -29,7 +29,11 @@ def follow_user(request, username):
         # Create a new Follow object to represent the follow relationship
         follow_object = Follow(follower=request.user, following=user_to_follow)
         follow_object.save()
-    return redirect('home')
+    source = request.GET.get('source')
+    if source == 'suggestion':
+        return redirect('suggestion')
+    else:
+        return redirect('home')
 
 
 @login_required
@@ -166,4 +170,11 @@ def delete_post(request, post_id):
     else:
         # Handle unauthorized deletion (e.g., show an error message)
         return redirect('posts')  # Redirect back to the home page
-
+def suggestion(request):
+    following_ids = Follow.objects.filter(follower=request.user).values_list('following_id', flat=True)
+    users = User.objects.exclude(id__in=following_ids)
+    if users.count() == True:
+        emptyval = True
+    else:    
+        emptyval = False
+    return render(request, 'suggestion.html', {'users': users, 'emptyval': emptyval})

@@ -20,7 +20,12 @@ body {
 	width: 500px;
 	text-align: center;
 }
-
+@media (max-width: 600px) {
+	.main {
+		width: 70%;
+		padding: 10px 40px;
+	}
+}
 h1 {
 	color: #153448;
 }
