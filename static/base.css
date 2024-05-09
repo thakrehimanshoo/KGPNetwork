@@ -388,5 +388,8 @@ a:hover {
 }
 
 @media (max-width: 699px) {
-    
+  .bio-form{
+    margin: 0 10px;
+  }
 }
+

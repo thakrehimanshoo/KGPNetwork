@@ -107,12 +107,14 @@ def home(request):
 
     # following_id = request.user.following.values_list('id', flat=True)
     posts = Post.objects.filter(author_id__in=following_ids).order_by('-created_at')
-    if posts.count() == 0:
+    myposts = Post.objects.filter(author_id=request.user.id).order_by('-created_at')
+    combined_posts = (posts | myposts).order_by('-created_at')
+    if combined_posts.count()== 0:
         postval = True 
     else:
         postval = False
     
-    return render(request, 'home.html',{'users': users, 'thisuser': request.user, 'emptyval': emptyval, 'posts': posts, 'postval': postval})
+    return render(request, 'home.html',{'users': users, 'thisuser': request.user, 'emptyval': emptyval, 'posts': combined_posts,  'postval': postval})
 
 def posts(request):
     posts = Post.objects.filter(author_id=request.user.id).order_by('-created_at')
