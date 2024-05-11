@@ -77,7 +77,6 @@ WSGI_APPLICATION = 'KGPNetwork.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -85,7 +84,7 @@ WSGI_APPLICATION = 'KGPNetwork.wsgi.application'
 #     }
 # }
 DATABASES = {
-    
+
     "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 # DATABASES = {
