@@ -14,6 +14,7 @@ body{
     justify-content: space-between;
     align-items: center;
     padding: 10px 30px;
+    padding-right: 10px;
     background-color: #153448;
 }
 @media (max-width: 699px) {
@@ -164,6 +165,22 @@ a:hover {
     align-items: center;
     height: 90vh;
 }
+.container-pass{
+    height: 84vh;
+    
+}
+.errorlist{
+  list-style: none;
+  color: red;
+}
+.bio-form-pass{
+  width: 80%;
+}
+@media (max-width: 699px) {
+    .container-pass {
+        height:80vh
+    }
+}
 .profile-pic{
     
     width: 100px; 
@@ -171,6 +188,7 @@ a:hover {
     object-fit: cover;
     border-radius: 50%;
     margin-bottom: 20px;
+    
    
 }
 .profile-sec-pic{
@@ -393,3 +411,59 @@ a:hover {
   }
 }
 
+.edit-button{
+  width: 10px;
+  position: relative;
+  left: 90%;
+  bottom: 22px;
+}
+.setting{
+ 
+    position: relative;
+    top: 5px;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #153448;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 5%;
+  background-color: #DFD0B8;
+  width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+
+.dropdown:hover .dropdown-content {display: block;}
+
+
+.helptext{
+  display: none;
+}

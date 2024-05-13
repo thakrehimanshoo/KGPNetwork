@@ -8,6 +8,9 @@ from .models import Follow
 from .models import Post
 from .forms import PostForm
 
+
+
+# from .forms import editprofile
 @login_required
 def create_post(request):
     if request.method == 'POST':
@@ -180,3 +183,72 @@ def suggestion(request):
     else:    
         emptyval = False
     return render(request, 'suggestion.html', {'users': users, 'emptyval': emptyval})
+
+
+
+
+
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
+
+
+from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
+
+def edit_profile(request):
+    profile_pic = None
+    if request.user.profile.profile_picture:
+        profile_pic = request.user.profile.profile_picture.url
+
+    if request.method == 'POST':
+        if request.user.has_usable_password():
+            
+            form = PasswordChangeForm(request.user, request.POST)
+        else:
+            
+            form = SetPasswordForm(request.user, request.POST)
+            
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('edit_profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        if request.user.has_usable_password():
+            form = PasswordChangeForm(request.user)
+        else:
+            form = SetPasswordForm(request.user)
+
+    return render(request, 'editprofile.html', {
+        'form': form,
+        'profile_pic': profile_pic
+    })
+
+# @login_required
+# def edit_profile(request):
+#     if request.user.profile.profile_picture:
+#             profile_pic = request.user.profile.profile_picture.url
+#     if request.method == 'POST':
+#         form = PasswordChangeForm(request.user, request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             update_session_auth_hash(request, user)  # Important!
+#             messages.success(request, 'Your password was successfully updated!')
+#             return redirect('edit_profile')
+#         else:
+#             messages.error(request, 'Please correct the error below.')
+#     else:
+#         form = PasswordChangeForm(request.user)
+#     return render(request, 'editprofile.html', {
+#         'form': form,
+#         'profile_pic': profile_pic
+#     })
+
+# class CustomPasswordChangeForm(PasswordChangeForm):
+#     def __init__(self, *args, **kwargs):
+#         super(CustomPasswordChangeForm, self).__init__(*args, **kwargs)
+#         if not self.user.has_usable_password():
+#             self.fields['old_password'].widget.attrs['readonly'] = True
+#             self.fields['old_password'].help_text = "You haven't set a password yet. Please set a new password."

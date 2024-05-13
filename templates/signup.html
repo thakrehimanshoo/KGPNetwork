@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+    <link rel="shortcut icon" type="image/png" href="/static/favicon.ico"/>
     <link rel="stylesheet" href="/static/login.css">
+    
 </head>
 <body>
+    {% load socialaccount%}
     <div class="main">
         <h1>KGPNetwork</h1>
         <h3>SignUp</h3>
@@ -34,6 +37,10 @@
             <!-- Add custom CSS class to the submit button -->
             <button class="btn" type="submit">Signup</button>
         </form>
+        <form action="{% provider_login_url 'google' %}?next=/editprofile" method="post">
+			{% csrf_token %}
+			<button style="margin: 0;" class="gsign" type="submit">SIGN UP WITH GOOGLE</button>
+		</form>
         <p>Already have an account? 
 			<a href="/login/"
 			style="text-decoration: none;">
