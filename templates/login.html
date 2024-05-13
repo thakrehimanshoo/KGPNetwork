@@ -4,54 +4,51 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>KGPNetwork</title>
-	<link rel="stylesheet"
-		href="/static/login.css">
+	<link rel="stylesheet" href="/static/login.css">
+	<link rel="shortcut icon" type="image/png" href="/static/favicon.ico"/>
 </head>
 
 <body>
-    
+	{% load socialaccount%}
 	<div class="main">
 		<h1>KGPNetwork</h1>
 		<h3>Enter your login credentials</h3>
-        <div id="error-message" style="display: none;">Incorrect username or password.</div>
+		<div id="error-message" style="display: none;">Incorrect username or password.</div>
 		<form action="/login/" method="post">
-            {% csrf_token %}
+			{% csrf_token %}
 			<label for="username">
 				Username:
 			</label>
-			<input type="text"
-				id="username"
-				name="username"
-				placeholder="Enter your Username" required>
+			<input type="text" id="username" name="username" placeholder="Enter your Username" required>
 
 			<label for="password">
 				Password:
 			</label>
-			<input type="password"
-				id="password"
-				name="password"
-				placeholder="Enter your Password" required>
+			<input type="password" id="password" name="password" placeholder="Enter your Password" required>
 
 			<div class="wrap">
-				<button type="submit"
-					>
+				<button type="submit">
 					Submit
 				</button>
 			</div>
 		</form>
-		<p>Not registered? 
-			<a href="/signup/"
-			style="text-decoration: none;">
+		<form action="{% provider_login_url 'google' %}?next=/profile" method="post">
+			{% csrf_token %}
+			<button style="margin: 0;" class="gsign" type="submit">SIGN IN WITH GOOGLE</button>
+		</form>
+		<p>Not registered?
+			<a href="/signup/" style="text-decoration: none;">
 				Create an account
 			</a>
+
 		</p>
 	</div>
-    <script>
-       
-        {% if error %}
-            document.getElementById("error-message").style.display = "block";
-        {% endif %}
-    </script>
+	<script>
+
+		{% if error %}
+		document.getElementById("error-message").style.display = "block";
+		{% endif %}
+	</script>
 </body>
 
 </html>

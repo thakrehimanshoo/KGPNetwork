@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock title %}
+{% block body %}
+
+<style>
+    /* Add your CSS styles here */
+    form {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+        background-color: #153448;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+
+<div class="container container-pass">
+    <form method="POST" class="bio-form bio-form-pass">
+        {% csrf_token %}
+        <h3 align="center"> {{request.user.username}} </h3>
+       
+        
+
+        <hr>
+        <br>
+
+        {% if profile_pic %} <img class="profile-pic" src="{{profile_pic}}" alt="">
+        {% else %} <img class="profile-pic" src="/static/profile_pics/user_icon.jpg" alt=""> {% endif %}
+
+        
+
+        <label for="id_change_password">Change password</label>
+        
+        {{ form }}
+        
+
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById("logo").innerHTML = "My Profile";
+
+</script>
+{% endblock body %}
